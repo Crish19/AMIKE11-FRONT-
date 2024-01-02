@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import BookingPage from './pages/BookingPage';
+import CancellationConfirmation from './pages/CancellationConfirmation';
+import ContactPage from "./pages/ContactPage";
+import AdminDashboard from './pages/AdminDashboard'; 
+import LoginForm from "./pages/LoginForm";
+import { AuthProvider } from './context/AuthContext'; // Import the AuthProvider
+import ProtectedRoute from "./components/ProtectedRoute";
+import RegisterForm from "./components/RegisterForm";
+import TestPage from "./pages/TestPage";
+import './App.css'
+import MobileBookingPage from "./pages/MobileBookingPage";
+import AboutUs from "./pages/AboutUs";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider> {/* Wrap your entire app with AuthProvider */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout/>} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/booking-cancelled-confirmation" element={<CancellationConfirmation />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} />} />
+          <Route path="/admin-login" element={<LoginForm/>} />
+          <Route path="/register" element={<RegisterForm/>} />
+          <Route path="/testpage" element={<TestPage/>} />
+          <Route path="/aboutus" element={<AboutUs/>} />
+          <Route path="/booking-mobile/:tourId" element={<MobileBookingPage />} />
+
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

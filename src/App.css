@@ -1,38 +1,93 @@
-.App {
-  text-align: center;
+/* Customize Swiper Navigation Arrows */
+.swiper-button-next, .swiper-button-prev {
+    color: #f97316; /* Tailwind orange-500 */
+}
+  
+/* Customize Swiper Pagination Dots */
+.swiper-pagination-bullet {
+    background-color: #f97316; /* Tailwind orange-500 */
+}
+  
+/* Customize Swiper Pagination Dots when active */
+.swiper-pagination-bullet-active {
+    background-color: #f97316; /* Tailwind orange-500 */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Custom Swiper Navigation Arrows */
+.custom-swiper-button {
+  --swiper-navigation-size: 20px; /* Adjust the size of the arrows */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.custom-swiper-button .swiper-button-next, .custom-swiper-button .swiper-button-prev {
+  top: 30%; /* Position at the vertical middle */
+  transform: translateY(-30%); /* Adjust vertical alignment */
+}
+
+.language-slot {
+    flex: 0 0 auto; /* Ensures that the slots can shrink but not grow */
+    margin: 0.5rem; /* Adjust margin for spacing */
+    padding: 0.5rem; /* Adjust padding as needed */
+}
+
+/* Adjustments for BookingWidget on Mobile */
+@media screen and (max-width: 768px) {
+    .booking-page .booking-widget {
+        display: none; /* Hide BookingWidget on BookingPage in mobile view */
+    }
+
+    .booking-widget {
+        padding: 0px;
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+
+    .booking-widget select,
+    .booking-widget input[type='text'],
+    .booking-widget input[type='email'],
+    .booking-widget input[type='tel'],
+    .booking-widget button {
+        font-size: 16px; /* Larger font size for better touch interaction */
+        padding: 10px 15px; /* Larger padding for easy tapping */
+    }
+
+    .booking-widget button {
+        min-height: 44px; /* Recommended minimum touch target size */
+    }
+
+    .booking-widget .language-slot {
+        font-size: 14px; /* Adjusting font size */
+        padding: 8px;
+        margin-bottom: 10px; /* Adjust padding for each language slot */
+    }
+}
+
+/* Optimize the DatePicker appearance */
+.booking-widget .datepicker-custom {
+    width: 100%; /* Make the DatePicker take the full width */
+}
+
+/* Regular styling for tour-select-dropdown */
+.tour-select-dropdown {
+    padding: 12px 10px;
+    font-size: 100%; /* Reduced padding */
+}
+
+/* Mobile-specific adjustments for tour-select-dropdown */
+@media screen and (max-width: 468px) {
+    .tour-select-dropdown {
+        font-size: 12px; /* Adjust font size for better readability */
+        padding: 8px 4px; /* Reduced padding for more space */
+        text-overflow: ellipsis; /* Add ellipsis for long text */
+    }
+}
+
+/* Adjustments for the dropdown select and options in mobile view */
+@media screen and (max-width: 768px) {
+    .booking-widget #tourSelect {
+      font-size: 12px; /* Smaller font size for the dropdown */
+    }
+  
+    .booking-widget #tourSelect option {
+      font-size: 12px; /* Smaller font size for the dropdown options */
+    }
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+  
