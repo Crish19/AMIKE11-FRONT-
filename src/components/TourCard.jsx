@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 function TourCard({ tour, onReadMore}) {
   const navigate = useNavigate();
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
 
   const handleBookNow = () => {
-    navigate(`/booking-mobile/${tour._id}`);
+    navigate(`${api}/booking-mobile/${tour._id}`);
   };
 
   const imageUrl = tour.images[0];

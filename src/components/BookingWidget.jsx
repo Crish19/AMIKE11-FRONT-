@@ -6,10 +6,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 function BookingWidget({ selectedTourId }) {
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
@@ -42,16 +42,14 @@ function BookingWidget({ selectedTourId }) {
       if (tourData) {
       }
     }
-  }, [selectedTourId,tours]);
+  }, [selectedTourId, tours]);
 
   //.............................................................................................................................
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const apiUrl = process.env.REACT_APP_API_URL; // Get the API URL from the environment variable
-
-        const response = await axios.get(`${apiUrl}/api/tours`);
+        const response = await axios.get(`${api}/api/tours`);
         setTours(response.data);
         console.log("Fetched Tours:", response.data); // Log the fetched tours
       } catch (error) {
@@ -246,7 +244,7 @@ function BookingWidget({ selectedTourId }) {
 
         // Create a reservation
         const reservationResponse = await axios.post(
-          `${process.env.REACT_APP_API_URL}/api/reservations/create`,
+          `${api}/api/reservations/create`,
 
           reservationData
         );
@@ -270,7 +268,7 @@ function BookingWidget({ selectedTourId }) {
 
           // Create a booking
           const bookingResponse = await axios.post(
-            `${process.env.REACT_APP_API_URL}/api/bookings`,
+            `${api}/api/bookings`,
 
             bookingData
           );
@@ -282,7 +280,7 @@ function BookingWidget({ selectedTourId }) {
             try {
               // Add a step to link the booking with the tour
               await axios.put(
-                `${process.env.REACT_APP_API_URL}/api/tours/${selectedTour}/add-booking`,
+                `${api}/api/tours/${selectedTour}/add-booking`,
                 { bookingId }
               );
               alert("Booking confirmed and added to tour.");
@@ -304,15 +302,12 @@ function BookingWidget({ selectedTourId }) {
             if (bookingResponse.status === 201) {
               // Show confirmation alert
               alert("Booking confirmed. You will be redirected shortly.");
-      
+
               // Set a timeout for redirection
               setTimeout(() => {
-                  navigate('/booking'); // Replace with the path you want to redirect to
+                navigate("/booking"); // Replace with the path you want to redirect to
               }, 5000); // Delay of 5 seconds
-          }
-      
-
-
+            }
 
             // Clear the form here
             setName("");
@@ -348,12 +343,9 @@ function BookingWidget({ selectedTourId }) {
     }
   };
 
-
-
   return (
-    <div className="booking-widget mt-12   shadow-2xl mx-auto max-w-md md:max-w-lg border rounded-3xl mb-5">
-<div className="border border-gray-500 p-3 md:p-4 rounded-3xl shadow-lg"
-     >
+    <div className="booking-widget mt-12 sticky top-12 shadow-2xl mx-auto max-w-md md:max-w-lg border rounded-3xl mb-5">
+      <div className="border border-gray-500 p-3 md:p-4 rounded-3xl shadow-lg">
         <p className="mb-7 font-bold">
           Booking also by{" "}
           <a
@@ -390,7 +382,7 @@ function BookingWidget({ selectedTourId }) {
                   value={selectedTour}
                   onChange={(e) => handleTourSelect(e.target.value)}
                   className="tour-select-dropdown w-full border border-gray-300 rounded-xl text-xs md:text-sm"
-                  >
+                >
                   <option value="">Select a Tour</option>
                   {tours.map((tour) => (
                     <option
@@ -421,30 +413,29 @@ function BookingWidget({ selectedTourId }) {
                 />
               </svg>
               <DatePicker
-    placeholderText="Select a date"
-    selected={selectedDate}
-    onChange={handleDateChange}
-    minDate={new Date()}
-    filterDate={(date) =>
-        selectedTourData
-        ? isDateAvailableForTour(date, selectedTourData)
-        : false
-    }
-    className="datepicker-custom ml-1" // Updated className
-    popperPlacement="bottom-start"
-    popperModifiers={{
-        offset: {
-            enabled: true,
-            offset: "5px, 10px" // Adjust offset as needed
-        },
-        preventOverflow: {
-            enabled: true,
-            escapeWithReference: false,
-            boundariesElement: "viewport"
-        }
-    }}
-/>
-
+                placeholderText="Select a date"
+                selected={selectedDate}
+                onChange={handleDateChange}
+                minDate={new Date()}
+                filterDate={(date) =>
+                  selectedTourData
+                    ? isDateAvailableForTour(date, selectedTourData)
+                    : false
+                }
+                className="datepicker-custom ml-1" // Updated className
+                popperPlacement="bottom-start"
+                popperModifiers={{
+                  offset: {
+                    enabled: true,
+                    offset: "5px, 10px", // Adjust offset as needed
+                  },
+                  preventOverflow: {
+                    enabled: true,
+                    escapeWithReference: false,
+                    boundariesElement: "viewport",
+                  },
+                }}
+              />
             </div>
 
             {/* Travelers Box */}
@@ -460,50 +451,55 @@ function BookingWidget({ selectedTourId }) {
               />
             </div>
           </div>
-        {/* Available Languages */}
-{selectedDate && selectedTourData && (
-  <div className="mt-3">
-    <h3 className="font-semibold mb-2">
-      Available Languages and Times:
-    </h3>
-    <div className="grid grid-cols-2 gap-2">
-      {selectedTourData.languagesWithTimeSlots
-        .filter((slot) => !isSlotLocked(slot))
-        .map((slot, index) => (
-          <div
-            key={index}
-            className={`language-slot rounded-full border ${
-              selectedLanguageSlot &&
-              selectedLanguageSlot.language === slot.language &&
-              selectedLanguageSlot.time === slot.startTime
-                ? "border-orange-500 bg-orange-100"
-                : "border-gray-300 hover:bg-orange-100 hover:border-orange-500"
-            } p-2 flex items-center justify-center cursor-pointer`}
-            onClick={() =>
-              toggleLanguageSelection(
-                slot.language,
-                slot.startTime,
-                slot._id
-              )
-            }
-          >
-            <CountryFlag
-              countryCode={
-                slot.language === "Spanish" ? "ES" :
-                slot.language === "English" ? "GB" :
-                slot.language === "German" ? "DE" :
-                slot.language === "French" ? "FR" : ""
-              }
-              svg
-              style={{ width: "15px", height: "15px" }}
-            />
-            <span className=" ml-3 md:text-l text-xs">{`${slot.language} ${slot.startTime}`}</span>
-          </div>
-        ))}
-    </div>
-  </div>
-)}
-</div>
+          {/* Available Languages */}
+          {selectedDate && selectedTourData && (
+            <div className="mt-3">
+              <h3 className="font-semibold mb-2">
+                Available Languages and Times:
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                {selectedTourData.languagesWithTimeSlots
+                  .filter((slot) => !isSlotLocked(slot))
+                  .map((slot, index) => (
+                    <div
+                      key={index}
+                      className={`language-slot rounded-full border ${
+                        selectedLanguageSlot &&
+                        selectedLanguageSlot.language === slot.language &&
+                        selectedLanguageSlot.time === slot.startTime
+                          ? "border-orange-500 bg-orange-100"
+                          : "border-gray-300 hover:bg-orange-100 hover:border-orange-500"
+                      } p-2 flex items-center justify-center cursor-pointer`}
+                      onClick={() =>
+                        toggleLanguageSelection(
+                          slot.language,
+                          slot.startTime,
+                          slot._id
+                        )
+                      }
+                    >
+                      <CountryFlag
+                        countryCode={
+                          slot.language === "Spanish"
+                            ? "ES"
+                            : slot.language === "English"
+                            ? "GB"
+                            : slot.language === "German"
+                            ? "DE"
+                            : slot.language === "French"
+                            ? "FR"
+                            : ""
+                        }
+                        svg
+                        style={{ width: "15px", height: "15px" }}
+                      />
+                      <span className=" ml-3 md:text-l text-xs">{`${slot.language} ${slot.startTime}`}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
 
         <TourTicket
           selectedTourName={selectedTourName}

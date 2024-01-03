@@ -24,9 +24,8 @@ function AdminDashboard() {
   };
 
   const handleSaveDiscount = async (discountData, isEditing) => {
-    const apiUrl = process.env.REACT_APP_API_URL; // Get the API URL from environment variable
 
-    const url = isEditing ? `${apiUrl}/api/discounts/${discountData._id}` : `${apiUrl}/api/discounts`;
+    const url = isEditing ? `/api/discounts/${discountData._id}` : `/api/discounts`;
     const method = isEditing ? "PUT" : "POST";
 
     try {

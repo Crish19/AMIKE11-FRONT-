@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 
 function AdminTourList({ setActiveTab, setSelectedTour }) {
   const [tours, setTours] = useState([]);
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
 
   const fetchTours = async () => {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
-      const response = await fetch(`${apiUrl}/api/tours`);
+      const response = await fetch(`${api}/api/tours`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -24,8 +24,7 @@ function AdminTourList({ setActiveTab, setSelectedTour }) {
 
   const handleDelete = async (id) => {
     try {
-      const apiUrl = process.env.REACT_APP_API_URL;
-    const response = await fetch(`${apiUrl}/api/tours/${id}`, {
+    const response = await fetch(`${api}/api/tours/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {

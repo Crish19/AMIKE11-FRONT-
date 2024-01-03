@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import AuthContext from '../context/AuthContext';
 
 function LoginForm() {
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // State to handle error message
@@ -14,7 +15,7 @@ function LoginForm() {
     setError(''); // Reset error message on new submission
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+      const response = await fetch(`${api}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

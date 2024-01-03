@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 function BookingPage() {
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
   const [tours, setTours] = useState([]);
   const [selectedTour, setSelectedTour] = useState(null);
   const imageGalleryRef = useRef(null);
@@ -24,7 +25,7 @@ function BookingPage() {
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tour`);
+        const response = await fetch(`${api}/api/tours`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -42,12 +43,13 @@ function BookingPage() {
   useEffect(() => {
     const fetchDiscounts = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/discounts`);
+        const response = await fetch(`${api}/api/discounts`);
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
+        console.log("Discounts:" + data);
         setDiscounts(data);
       } catch (error) {
         console.error("Error fetching discounts:", error);
@@ -115,7 +117,7 @@ function BookingPage() {
         <button
           onClick={() => setSelectedTour(null)}
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg w-full text-center mt-4 md:w-auto md:mt-0 mb-3"
-          >
+        >
           Back to Tours
         </button>
       </div>
@@ -210,40 +212,32 @@ function BookingPage() {
               ))
             ))}
 
-{activeTab === "discount" &&
-  (isMobile ? (
-    // Swiper for Discounts on Mobile
-    <Swiper
-      className="custom-swiper-button"
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      spaceBetween={20}
-      slidesPerView={1}
-      navigation
-      pagination={{ clickable: true }}
-      scrollbar={{ draggable: true }}
-    >
-      {discounts.map((discount) => (
-        <SwiperSlide key={discount._id} className=" mb-2">
-          <DiscountCard
-            key={discount._id}
-            discount={discount}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  ) : (
-    // Regular list for Discounts on Desktop
-    discounts.map((discount) => (
-      <DiscountCard
-        key={discount._id}
-        discount={discount}
-      />
-    ))
-  ))
-}
+          {activeTab === "discount" &&
+            (isMobile ? (
+              // Swiper for Discounts on Mobile
+              <Swiper
+                className="custom-swiper-button"
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                spaceBetween={20}
+                slidesPerView={1}
+                navigation
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}
+              >
+                {discounts.map((discount) => (
+                  <SwiperSlide key={discount._id} className=" mb-2">
+                    <DiscountCard key={discount._id} discount={discount} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              // Regular list for Discounts on Desktop
+              discounts.map((discount) => (
+                <DiscountCard key={discount._id} discount={discount} />
+              ))
+            ))}
         </div>
-
-        <div className="md:flex-shrink-0 md:max-w-[30%] sticky top-[desired-limit] right-4">
+        <div className="md:flex-shrink-0 md:max-w-[30%] right-4">
           <BookingWidget />
         </div>
       </div>

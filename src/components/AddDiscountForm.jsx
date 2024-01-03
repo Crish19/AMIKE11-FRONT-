@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"; 
 
 function AddDiscountForm({discountData, onRefresh}) {
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
   const [images, setImages] = useState([]);
   const [discountFormData, setDiscountFormData] = useState(discountData || { name: '', description: '', imageUrl:'', websiteUrl:'', location:'' });
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ function AddDiscountForm({discountData, onRefresh}) {
     }
   
     const method = discountData ? 'PUT' : 'POST';
-    const url = discountData ? `${process.env.REACT_APP_API_URL}/api/discounts/${discountData._id}` : `${process.env.REACT_APP_API_URL}/api/discounts`;
+    const url = discountData ? `${api}t:3001/api/discounts/${discountData._id}` : `/api/discounts`;
   
     try {
       const isEditing = !!discountData && !!discountData._id; // Check if editing an existing discount

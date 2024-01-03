@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 
 function AdminDiscountList({ setActiveTab, setSelectedDiscount }) {
   const [discounts, setDiscounts] = useState([]);
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
 
   // Function to fetch discounts
   const fetchDiscounts = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/discounts`); // Use the environment variable
+      const response = await fetch(`${api}/api/discounts`); // Use the environment variable
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -23,7 +24,7 @@ function AdminDiscountList({ setActiveTab, setSelectedDiscount }) {
   }, []);
 
   const handleDelete = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/discounts/${id}`, { // Use the environment variable
+    const response = await fetch(`${api}/api/discounts/${id}`, { // Use the environment variable
       method: "DELETE",
     });
 

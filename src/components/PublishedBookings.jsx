@@ -9,15 +9,16 @@ function PublishedBookings() {
   const [tours, setTours] = useState([]);
   const [expandedLanguages, setExpandedLanguages] = useState({});
   const formattedSelectedDate = date.toISOString().split("T")[0];
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
   
 
   // Function to fetch tours
   // Function to fetch tours along with their bookings
   const fetchTours = async () => {
-    const apiUrl = process.env.REACT_APP_API_URL; // Use the API URL from the environment variable
+    
 
     try {
-      const response = await fetch(`${apiUrl}/api/tours-with-bookings`);
+      const response = await fetch(`${api}/api/tours-with-bookings`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       console.log("Fetched Tours with Bookings Data:", data); // Log the fetched data
@@ -81,10 +82,10 @@ function PublishedBookings() {
     const newLockStatus = !currentLockStatus;
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL; // Use the API URL from the environment variable
+      
 
       const response = await fetch(
-        `${apiUrl}/api/tours/${tourId}/language-session-lock`,
+        `${api}/api/tours/${tourId}/language-session-lock`,
         {
           method: "PUT",
           headers: {

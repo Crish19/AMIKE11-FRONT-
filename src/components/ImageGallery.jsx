@@ -2,6 +2,7 @@ import React, { forwardRef, useState } from "react";
 
 const ImageGallery = forwardRef(({ images }, ref) => {
   const [selectedPicIndex, setSelectedPicIndex] = useState(0);
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
 
   if (!images || images.length === 0) {
     return <div>No Images Available</div>;
@@ -26,7 +27,7 @@ const ImageGallery = forwardRef(({ images }, ref) => {
         {images.map((image, index) => (
           <img
             key={index}
-            src={`${process.env.REACT_APP_API_URL}${image.startsWith("/") ? "" : "/"}${image}`}
+            src={`${api}/${image.startsWith("/") ? "" : "/"}${image}`}
             alt={`Tour view ${index + 1}`}
             className={`mb-2 rounded-2xl object-cover cursor-pointer ${
               selectedPicIndex === index ? "border-2 border-orange-500" : "opacity-60"
@@ -40,7 +41,7 @@ const ImageGallery = forwardRef(({ images }, ref) => {
       {/* Main Image and Navigation Arrows */}
       <div className="relative flex-grow">
         <img
-  src={`${process.env.REACT_APP_API_URL}${images[selectedPicIndex].startsWith('/') ? '' : '/'}${images[selectedPicIndex]}`}
+  src={`${api}/${images[selectedPicIndex].startsWith('/') ? '' : '/'}${images[selectedPicIndex]}`}
   alt={`Selected tour image`}
           className="w-full h-auto md:h-[78vh] object-cover rounded-2xl"
           style={{ aspectRatio: '4 / 3' }} // Consistent aspect ratio on all screens

@@ -5,6 +5,7 @@ function RegisterForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,9 +16,8 @@ function RegisterForm() {
     }
 
     try {
-      const apiUrl = process.env.REACT_APP_API_URL; // Use the API URL from the environment variable
 
-      const response = await fetch(`${apiUrl}/api/register`, {
+      const response = await fetch(`${api}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

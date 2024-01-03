@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddTourForm({ tourData }) {
+  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
   const isEditing = !!tourData;
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
@@ -210,7 +211,7 @@ function AddTourForm({ tourData }) {
     }
 
     try {
-      const url = isEditing ? `/api/tours/${tourFormData._id}` : "/api/tours";
+      const url = isEditing ? `${api}/api/tours/${tourFormData._id}` : "/api/tours";
       const response = await fetch(url, {
         method: isEditing ? "PUT" : "POST",
         body: formData,
