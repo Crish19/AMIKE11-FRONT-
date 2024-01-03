@@ -29,7 +29,7 @@ function AddDiscountForm({discountData, onRefresh}) {
     }
   
     const method = discountData ? 'PUT' : 'POST';
-    const url = discountData ? `${api}t:3001/api/discounts/${discountData._id}` : `/api/discounts`;
+    const url = discountData ? `${api}/api/discounts/${discountData._id}` : `/api/discounts`;
   
     try {
       const isEditing = !!discountData && !!discountData._id; // Check if editing an existing discount
