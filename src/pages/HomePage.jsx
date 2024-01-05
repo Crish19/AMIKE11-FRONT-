@@ -21,7 +21,7 @@ function HomePage() {
             to="booking"
             className="bg-orange-500 hover:bg-orange-600 text-white py-1 md:py-2 px-4 md:px-6 rounded-full font-bold text-base md:text-lg book-now-button"
           >
-            Book Now
+            Explore Our Tours
           </Link>
         </div>
       </div>
