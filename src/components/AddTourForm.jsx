@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddTourForm({ tourData }) {
-  const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
+  const api = 'http://localhost:3001'
   const isEditing = !!tourData;
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
