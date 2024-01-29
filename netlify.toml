@@ -4,7 +4,7 @@
   status = 200
   
 [[redirects]]
-  from = "/api/**"
+  from = "/api/*"
   to = "https://obscure-sierra-26039-89103941a3f4.herokuapp.com/:splat"
   status = 200
   force = true
