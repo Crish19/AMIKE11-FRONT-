@@ -10,7 +10,7 @@ function TourCard({ tour, onReadMore}) {
     navigate(`${api}/booking-mobile/${tour._id}`);
   };
 
-  const imageUrl = tour.images[0];
+  const imageUrl = "https://obscure-sierra-26039-89103941a3f4.herokuapp.com/" + tour.images[0];
 
   // Function to truncate text for mobile screens
   const truncateText = (text, charLimit) => {
