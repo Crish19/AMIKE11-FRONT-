@@ -4,7 +4,7 @@ function DiscountCard({ discount }) {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-5 mx-2">
       {/* Image */}
-      <img src={discount.imageUrl} alt={discount.name} className="w-full h-48 sm:h-64 object-cover object-center" />
+      <img src={"https://obscure-sierra-26039-89103941a3f4.herokuapp.com/"+discount.imageUrl} alt={discount.name} className="w-full h-48 sm:h-64 object-cover object-center" />
       
       <div className="p-3">
         {/* Name */}

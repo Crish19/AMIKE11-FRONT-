@@ -27,7 +27,7 @@ const ImageGallery = forwardRef(({ images }, ref) => {
         {images.map((image, index) => (
           <img
             key={index}
-            src={`${api}/${image.startsWith("/") ? "" : "/"}${image}`}
+            src={`${api}/${image.startsWith("/") ? "" : ""}${image}`}
             alt={`Tour view ${index + 1}`}
             className={`mb-2 rounded-2xl object-cover cursor-pointer ${
               selectedPicIndex === index ? "border-2 border-orange-500" : "opacity-60"
@@ -41,7 +41,7 @@ const ImageGallery = forwardRef(({ images }, ref) => {
       {/* Main Image and Navigation Arrows */}
       <div className="relative flex-grow">
         <img
-  src={`${api}/${images[selectedPicIndex].startsWith('/') ? '' : '/'}${images[selectedPicIndex]}`}
+  src={`${api}/${images[selectedPicIndex].startsWith('/') ? '' : ''}${images[selectedPicIndex]}`}
   alt={`Selected tour image`}
           className="w-full h-auto md:h-[78vh] object-cover rounded-2xl"
           style={{ aspectRatio: '4 / 3' }} // Consistent aspect ratio on all screens
