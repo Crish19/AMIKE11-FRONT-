@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddTourForm({ tourData }) {
-  const api = 'http://localhost:3001'
+  const api = "https://obscure-sierra-26039-89103941a3f4.herokuapp.com";
   const isEditing = !!tourData;
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
@@ -155,8 +155,6 @@ function AddTourForm({ tourData }) {
     //   if (key === "languagesOffered") {
     // Append each language separately
 
-
-
     const uniqueLanguages = new Set(selectedLanguages);
     uniqueLanguages.forEach((language) => {
       formData.append("languagesOffered", language);
@@ -211,8 +209,8 @@ function AddTourForm({ tourData }) {
     }
 
     try {
-      const url = isEditing ? `${api}/api/tours/${tourFormData._id}` : "/api/tours";
-      const response = await fetch(url, {
+      const url = isEditing ? `/api/tours/${tourFormData._id}` : "/api/tours";
+      const response = await fetch(api + url, {
         method: isEditing ? "PUT" : "POST",
         body: formData,
         headers: {
@@ -324,7 +322,10 @@ function AddTourForm({ tourData }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-4 sm:p-6 rounded shadow-md">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white p-4 sm:p-6 rounded shadow-md"
+    >
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Tour Name
@@ -460,53 +461,52 @@ function AddTourForm({ tourData }) {
             </div>
           ))}
         </div>
-        </div>
+      </div>
 
-
-
-
-{/* Time Slots Section */}
-<div className="border p-4 rounded my-4">
-  <h3 className="font-bold text-lg mb-2">Time Slots</h3>
-  {selectedLanguages.map((language) => (
-    <div key={language} className="mb-6">
-      <h4 className="text-md font-semibold mb-2">{language} Time Slots:</h4>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {languagesWithTimeSlots[language]?.map((time, index) => (
-          <div key={`${language}-${index}`} className="flex flex-col sm:flex-row items-center gap-2">
-            <input
-              type="time"
-              value={time}
-              onChange={(e) => handleTimeChange(language, index, e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 w-full"
-            />
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-              type="button"
-              onClick={() => removeTimeSlot(language, index)}
-            >
-              Remove
-            </button>
+      {/* Time Slots Section */}
+      <div className="border p-4 rounded my-4">
+        <h3 className="font-bold text-lg mb-2">Time Slots</h3>
+        {selectedLanguages.map((language) => (
+          <div key={language} className="mb-6">
+            <h4 className="text-md font-semibold mb-2">
+              {language} Time Slots:
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {languagesWithTimeSlots[language]?.map((time, index) => (
+                <div
+                  key={`${language}-${index}`}
+                  className="flex flex-col sm:flex-row items-center gap-2"
+                >
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) =>
+                      handleTimeChange(language, index, e.target.value)
+                    }
+                    className="border border-gray-300 rounded px-3 py-2 w-full"
+                  />
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    type="button"
+                    onClick={() => removeTimeSlot(language, index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <div className="sm:col-span-2 md:col-span-3">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                  type="button"
+                  onClick={() => addTimeSlot(language, "")}
+                >
+                  Add Time Slot
+                </button>
+              </div>
+            </div>
           </div>
         ))}
-        <div className="sm:col-span-2 md:col-span-3">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            type="button"
-            onClick={() => addTimeSlot(language, "")}
-          >
-            Add Time Slot
-          </button>
-        </div>
       </div>
-    </div>
-  ))}
-</div>
-
-
-
-
-
 
       <div className="mb-4">
         <label className=" block text-gray-700 text-sm font-bold mb-2">
@@ -573,42 +573,50 @@ function AddTourForm({ tourData }) {
         />
       </div>
 
-{/* Itinerary Section */}
-<div className="border p-4 rounded my-4">
-  <h2 className="font-semibold text-lg mb-2">What To Expect - Itinerary</h2>
-  {tourFormData.itinerary.map((point, index) => (
-    <div key={index} className="flex flex-col sm:flex-row items-start mb-4">
-      <input
-        type="text"
-        placeholder="Title"
-        value={point.title}
-        onChange={(e) => handleItineraryChange(index, "title", e.target.value)}
-        className="border border-gray-300 rounded px-3 py-2 mb-2 sm:mb-0 sm:mr-2 w-full sm:flex-grow"
-      />
-      <textarea
-        placeholder="Description"
-        value={point.description}
-        onChange={(e) => handleItineraryChange(index, "description", e.target.value)}
-        className="border border-gray-300 rounded px-3 py-2 mb-2 sm:mb-0 w-full h-24 sm:h-auto overflow-y-scroll sm:flex-grow"
-      />
-      <button
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto md:ml-2"
-        type="button"
-        onClick={() => removeItineraryPoint(index)}
-      >
-        Remove
-      </button>
-    </div>
-  ))}
-  <button
-    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-    type="button"
-    onClick={addItineraryPoint}
-  >
-    Add Itinerary Point
-  </button>
-</div>
-
+      {/* Itinerary Section */}
+      <div className="border p-4 rounded my-4">
+        <h2 className="font-semibold text-lg mb-2">
+          What To Expect - Itinerary
+        </h2>
+        {tourFormData.itinerary.map((point, index) => (
+          <div
+            key={index}
+            className="flex flex-col sm:flex-row items-start mb-4"
+          >
+            <input
+              type="text"
+              placeholder="Title"
+              value={point.title}
+              onChange={(e) =>
+                handleItineraryChange(index, "title", e.target.value)
+              }
+              className="border border-gray-300 rounded px-3 py-2 mb-2 sm:mb-0 sm:mr-2 w-full sm:flex-grow"
+            />
+            <textarea
+              placeholder="Description"
+              value={point.description}
+              onChange={(e) =>
+                handleItineraryChange(index, "description", e.target.value)
+              }
+              className="border border-gray-300 rounded px-3 py-2 mb-2 sm:mb-0 w-full h-24 sm:h-auto overflow-y-scroll sm:flex-grow"
+            />
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto md:ml-2"
+              type="button"
+              onClick={() => removeItineraryPoint(index)}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          type="button"
+          onClick={addItineraryPoint}
+        >
+          Add Itinerary Point
+        </button>
+      </div>
 
       {/* Submit Button */}
 

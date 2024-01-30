@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 
 const ImageGallery = forwardRef(({ images }, ref) => {
   const [selectedPicIndex, setSelectedPicIndex] = useState(0);
-  const api = 'http://localhost:3001'
+  const api = "https://obscure-sierra-26039-89103941a3f4.herokuapp.com";
 
   if (!images || images.length === 0) {
     return <div>No Images Available</div>;

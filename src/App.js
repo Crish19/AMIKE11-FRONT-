@@ -13,6 +13,7 @@ import TestPage from "./pages/TestPage";
 import './App.css'
 import MobileBookingPage from "./pages/MobileBookingPage";
 import AboutUs from "./pages/AboutUs";
+import ConfirmCancel from "./pages/ConfirmCancel";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Layout/>} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/booking-cancelled-confirmation" element={<CancellationConfirmation />} />
+          <Route path="/api/bookings/cancel/:id" element={<ConfirmCancel />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} />} />
           <Route path="/admin-login" element={<LoginForm/>} />
@@ -30,7 +32,6 @@ function App() {
           <Route path="/testpage" element={<TestPage/>} />
           <Route path="/aboutus" element={<AboutUs/>} />
           <Route path="/booking-mobile/:tourId" element={<MobileBookingPage />} />
-
         </Routes>
       </Router>
     </AuthProvider>

@@ -7,7 +7,7 @@ function TourCard({ tour, onReadMore}) {
   const api = 'https://obscure-sierra-26039-89103941a3f4.herokuapp.com'
 
   const handleBookNow = () => {
-    navigate(`${api}/booking-mobile/${tour._id}`);
+    navigate(`/booking-mobile/${tour._id}`);
   };
 
   const imageUrl = "https://obscure-sierra-26039-89103941a3f4.herokuapp.com/" + tour.images[0];
