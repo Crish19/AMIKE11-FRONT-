@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<Layout/>} />
           <Route path="/booking" element={<BookingPage />} />
           <Route path="/booking-cancelled-confirmation" element={<CancellationConfirmation />} />
-          <Route path="/api/bookings/cancel/:id" element={<ConfirmCancel />} />
+          <Route path="/api/bookings/cancel/:bookingId" element={<ConfirmCancel />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/admin" element={<ProtectedRoute element={<AdminDashboard />} />} />
           <Route path="/admin-login" element={<LoginForm/>} />
